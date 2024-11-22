@@ -144,6 +144,29 @@
             background: rgba(76, 175, 80, 0.1);
             transform: translateY(-2px);
         }
+        .countdown-container {
+            background-color: var(--dark);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .countdown {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .price-info {
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        .price-info p {
+            margin: 5px 0;
+        }
 
         footer {
             text-align: center;
@@ -186,6 +209,63 @@
         document.addEventListener('DOMContentLoaded', () => {
             showTab('tab-wlm');
         });
+
+    const initialPrice = 0.000034; // Starting price on 2024-11-21
+    const dailyIncrease = 0.000003; // Increment per day
+    const startDate = new Date(2024, 10, 21, 15, 30, 0); // Start date: 2024-11-21 at 15:30
+
+    function calculatePrices(daysPassed) {
+        const currentPrice = initialPrice + daysPassed * dailyIncrease;
+        const nextPrice = currentPrice + dailyIncrease;
+        return { currentPrice, nextPrice };
+    }
+
+    function updatePrices() {
+        const now = new Date();
+        const daysPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+
+        const { currentPrice, nextPrice } = calculatePrices(daysPassed);
+        document.getElementById("current-price").textContent = `$${currentPrice.toFixed(6)}`;
+        document.getElementById("next-price").textContent = `$${nextPrice.toFixed(6)}`;
+    }
+
+    function startDailyCountdown(display) {
+        const interval = setInterval(() => {
+            const now = new Date();
+            const next15_30 = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate(),
+                15,
+                30,
+                0
+            );
+            if (now > next15_30) {
+                next15_30.setDate(next15_30.getDate() + 1);
+            }
+
+            const timeLeft = next15_30 - now;
+            if (timeLeft < 0) {
+                clearInterval(interval);
+                display.textContent = "Updating...";
+                updatePrices();
+            } else {
+                const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+                const seconds = Math.floor((timeLeft / 1000) % 60);
+
+                display.textContent =
+                    `${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
+            }
+        }, 1000);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const countdownDisplay = document.getElementById("countdown");
+        startDailyCountdown(countdownDisplay);
+        updatePrices();
+    });
+
     </script>
 </head>
 <body>
@@ -193,7 +273,16 @@
         <img src="logo.png" alt="WLM Token Logo">
         <h1>WLM Token</h1>
         <p>Empowering liquidity pooling for token creators. Build, partnership, and grow together: Merging smaller tokens into larger liquidity pools.</p>
-   
+     <div class="countdown-container">
+        <div class="countdown" id="countdown">Loading...</div>
+        <div class="price-info">
+            <p>Today's Price: <span id="current-price">$0.000037</span></p>
+            <p>Next Price: <span id="next-price">$0.000040</span></p>
+        <button class="button" onclick="window.open('https://sunpump.meme/token/TECnLhegQV7DvsN3chXo42yWR9nbiepSTR', '_blank')">BUY</button>
+
+        </div>
+    </div>
+  
 
 
  </header>
