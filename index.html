@@ -210,9 +210,9 @@
             showTab('tab-wlm');
         });
 
-    const initialPrice = 0.000034; // Starting price on 2024-11-21
-    const dailyIncrease = 0.000002; // Increment per day
-    const startDate = new Date(2024, 10, 21, 15, 30, 0); // Start date: 2024-11-21 at 21:21
+    const initialPrice = 0.000032; // Starting price on 2024-11-21
+    const dailyIncrease = 0.0000005; // Increment per day
+    const startDate = new Date(2024, 10, 20, 15, 30, 0); // Start date: 2024-11-21 at 21:21
 
     function calculatePrices(daysPassed) {
         const currentPrice = initialPrice + daysPassed * dailyIncrease;
