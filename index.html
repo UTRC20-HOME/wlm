@@ -1,332 +1,655 @@
-<html>
-<head><base href="." /></head>
-<body>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WLM Token</title>
-    <style>
-        :root {
-            --primary: #4CAF50;
-            --dark: #1E1E1E;
-            --light: #FFFFFF;
-            --background: #121212;
-            --inactive-tab: #888;
-            --highlight: #0066cc;
-            --accent: #00aa55;
-        }
+<html><head><base href="." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WLM Token</title>
+<meta name="description" content="WLM Token: Building the Future of Token Liquidity through innovative UTRC20 technology and community-driven growth">
+<meta name="keywords" content="WLM Token, Wait List Miners, UTRC20, cryptocurrency, blockchain, Tron">
+<meta name="author" content="Wait List Miners">
+<meta property="og:title" content="WLM Token - Wait List Miners">
+<meta property="og:description" content="Join the future of token liquidity with WLM Token">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wlmtoken.com">
+<meta property="og:image" content="https://yt3.googleusercontent.com/QoLKEi7xDvtRofXGBKQE37C2RdpR_V4S9D7MsSUMIiM4cg15O-CelkS-3gQClPKzYKEQlqxd=w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+:root {
+    --primary: #4CAF50;
+    --dark: #1E1E1E;  
+    --light: #FFFFFF;
+    --background: #121212;
+    --inactive-tab: #888;
+    --highlight: #0066cc;
+    --accent: #00aa55;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: var(--background);
-            color: var(--light);
-            padding: 20px;
-            line-height: 1.6;
-        }
+/* Reset and variables remain at top */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background);
+    color: var(--light);
+    padding: 20px;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            background: linear-gradient(180deg, rgba(30,30,30,0.6) 0%, rgba(18,18,18,0.8) 100%);
-        }
+/* Component-specific styles should be grouped */
+.hero {
+    background-image: url('https://yt3.googleusercontent.com/QoLKEi7xDvtRofXGBKQE37C2RdpR_V4S9D7MsSUMIiM4cg15O-CelkS-3gQClPKzYKEQlqxd=w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 60vh;
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        header img {
-            width: 200px; /* Increased logo size */
-            height: auto;
-            margin-bottom: 20px;
-        }
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s ease-in-out infinite;
+}
 
-        header h1 {
-            color: var(--primary);
-            margin: 0;
-            font-size: 2.5em;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1;
+}
 
-        header p {
-            font-size: 1.2em;
-            color: var(--light);
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 1em auto;
-        }
+header {
+    position: relative;
+    z-index: 2;
+    background: rgba(30,30,30,0.7);
+    backdrop-filter: blur(10px);
+}
 
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
+.floating-coins {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
 
-        .tab {
-            padding: 12px 24px;
-            cursor: pointer;
-            background: var(--dark);
-            color: var(--light);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
 
-        .tab:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
+.tab {
+    padding: 12px 24px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+}
 
-        .tab.active {
-            background: var(--primary);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
-        }
+.tab:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
 
-        .tab-content {
-            display: none;
-            padding: 30px;
-            background: var(--dark);
-            border-radius: 12px;
-            margin: 20px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
+.tab.active {
+    background: var(--primary);
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
 
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+.tab-content {
+    display: none;
+    padding: 30px;
+    background: var(--dark);
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
 
-        .button {
-            background-color: var(--primary);
-            color: var(--light);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.button {
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    color: var(--light);
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
 
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+}
 
-        .links {
-            margin-top: 40px;
-            text-align: center;
-            padding: 20px;
-            background: rgba(30,30,30,0.4);
-            border-radius: 12px;
-        }
+.countdown-container {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(76, 175, 80, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    margin: 2rem auto;
+}
 
-        .links a {
-            color: var(--primary);
-            text-decoration: none;
-            margin: 0 15px;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
+.countdown {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
 
-        .links a:hover {
-            background: rgba(76, 175, 80, 0.1);
-            transform: translateY(-2px);
-        }
-        .countdown-container {
-            background-color: var(--dark);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            max-width: 600px;
-            margin: 20px auto;
-        }
+.price-info {
+    font-size: 1em;
+    margin-bottom: 15px;
+}
 
-        .countdown {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
+.price-info p {
+    margin: 5px 0;
+}
 
-        .price-info {
-            font-size: 1em;
-            margin-bottom: 15px;
-        }
+.links {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px;
+    background: rgba(30,30,30,0.4);
+    border-radius: 12px;
+}
 
-        .price-info p {
-            margin: 5px 0;
-        }
+.links a {
+    color: var(--primary);
+    text-decoration: none;
+    margin: 0 15px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
 
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: var(--light);
-            opacity: 0.7;
-        }
+.links a:hover {
+    background: rgba(76, 175, 80, 0.1);
+    transform: translateY(-2px);
+}
 
-        @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .tab {
-                margin: 5px 0;
-                text-align: center;
-            }
-        }
-    </style>
-    <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-                content.style.display = 'none';
-            });
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            
-            const targetTab = document.getElementById(tabId);
-            const targetTabButton = document.querySelector(`[data-tab="${tabId}"]`);
-            
-            targetTab.style.display = 'block';
-            setTimeout(() => {
-                targetTab.classList.add('active');
-            }, 10);
-            targetTabButton.classList.add('active');
-        }
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: var(--light);
+    opacity: 0.7;
+}
 
-        document.addEventListener('DOMContentLoaded', () => {
-            showTab('tab-wlm');
-        });
+.success-stories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-    const initialPrice = 0.000032; // Starting price on 2024-11-21
-    const dailyIncrease = 0.000001; // Increment per day
-    const startDate = new Date(2024, 10, 20, 15, 30, 0); // Start date: 2024-11-21 at 21:21
+.story-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
 
-    function calculatePrices(daysPassed) {
-        const currentPrice = initialPrice + daysPassed * dailyIncrease;
-        const nextPrice = currentPrice + dailyIncrease;
-        return { currentPrice, nextPrice };
+.story-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+}
+
+.story-card:hover::before {
+    opacity: 0.1;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.feature-item {
+    background: rgba(255,255,255,0.03);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.08);
+    border-color: var(--primary);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.animated-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    margin: 1rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.animated-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    animation: progress 2s infinite;
+}
+
+@keyframes progress {
+    0% { left: -30%; }
+    100% { left: 100%; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+    0%, 100% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 30px rgba(76, 175, 80, 0.6); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.timeline {
+    max-width: 1000px;
+    margin: 40px auto;
+    position: relative;
+    padding: 20px;
+}
+
+.timeline-item {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid var(--primary);
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover {
+    transform: translateX(10px);
+    background: rgba(255,255,255,0.08);
+}
+
+.highlight-text {
+    text-align: center;
+    color: var(--primary);
+    font-size: 2em;
+    margin: 40px 0;
+    animation: glow 2s ease-in-out infinite;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.benefit-card {
+    background: rgba(255,255,255,0.03);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
+}
+
+.social-links {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--light);
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.15);
+}
+
+.metrics-showcase {
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.metric-card {
+    background: rgba(255,255,255,0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-top: 0.5rem;
+}
+
+/* Animations in their own section */
+@keyframes glow {
+    0%, 100% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 30px rgba(76, 175, 80, 0.6); }
+}
+
+.key-points {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.point {
+  background: rgba(255,255,255,0.05);
+  padding: 2rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.point:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
+}
+
+@media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .tab {
+        margin: 5px 0;
+        text-align: center;
     }
 
-    function updatePrices() {
-        const now = new Date();
-        const daysPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-
-        const { currentPrice, nextPrice } = calculatePrices(daysPassed);
-        document.getElementById("current-price").textContent = `$${currentPrice.toFixed(6)}`;
-        document.getElementById("next-price").textContent = `$${nextPrice.toFixed(6)}`;
+    iframe {
+        width: 100%;
+        height: auto;
     }
-
-    function startDailyCountdown(display) {
-        const interval = setInterval(() => {
-            const now = new Date();
-            const next15_30 = new Date(
-                now.getFullYear(),
-                now.getMonth(),
-                now.getDate(),
-                15,
-                30,
-                0
-            );
-            if (now > next15_30) {
-                next15_30.setDate(next15_30.getDate() + 1);
-            }
-
-            const timeLeft = next15_30 - now;
-            if (timeLeft < 0) {
-                clearInterval(interval);
-                display.textContent = "Updating...";
-                updatePrices();
-            } else {
-                const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
-                const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
-                const seconds = Math.floor((timeLeft / 1000) % 60);
-
-                display.textContent =
-                    `${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
-            }
-        }, 1000);
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const countdownDisplay = document.getElementById("countdown");
-        startDailyCountdown(countdownDisplay);
-        updatePrices();
-    });
-
-    </script>
+}
+</style>
 </head>
 <body>
-    <header>
-        <img src="logo.png" alt="WLM Token Logo">
-        <h1>WLM Token</h1>
-        <p>Empowering liquidity pooling for token creators. Build, partnership, and grow together: Merging smaller tokens into larger liquidity pools.</p>
-     <div class="countdown-container">
-        <div class="countdown" id="countdown">Loading...</div>
-        <div class="price-info">
-            <p>Today's Price: <span id="current-price">$0.000037</span></p>
-            <p>Next Price: <span id="next-price">$0.000040</span></p>
-        <button class="button" onclick="window.open('https://sunpump.meme/token/TECnLhegQV7DvsN3chXo42yWR9nbiepSTR', '_blank')">BUY</button>
+    <section class="hero">
+        <div class="floating-coins" id="floatingCoins"></div>
+        <header>
+            <h1>WLM Token</h1>
+            <p>Wait List Miners: Building the Future of Token Liquidity</p>
+            <div class="countdown-container">
+                <div class="countdown" id="countdown">Loading...</div>
+                <div class="price-info">
+                    <p>Today's Price: <span id="current-price">$0.000037</span></p>
+                    <p>Next Price: <span id="next-price">$0.000040</span></p>
+                    <button class="button glow-effect" onclick="window.open('https://sunpump.meme/token/TECnLhegQV7DvsN3chXo42yWR9nbiepSTR', '_blank')">
+                        <span class="button-text">Buy WLM Token</span>
+                        <span class="button-icon">🚀</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+    </section>
 
+    <section class="highlight-section">
+        <h2>Why Choose WLM Token?</h2>
+        <div class="key-points">
+            <div class="point">
+                <h3>🎯 Strategic Growth</h3>
+                <p>Daily price increases ensure steady appreciation while maintaining stability.</p>
+            </div>
+            <div class="point">
+                <h3>🔒 Security First</h3>
+                <p>Built on Tron's robust blockchain with advanced security measures.</p>
+            </div>
+            <div class="point">
+                <h3>🌐 Global Community</h3>
+                <p>Join thousands of holders worldwide in our growing ecosystem.</p>
+            </div>
+        </div>
+
+
+    </section>
+
+    <section class="feature-grid">
+        <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure Architecture</h3>
+            <p>Built on Tron's robust blockchain with advanced security measures and audited smart contracts.</p>
+            <div class="animated-progress"></div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">📈</div>
+            <h3>Growth Strategy</h3>
+            <p>Daily price increases and strategic partnerships ensure sustainable long-term value appreciation.</p>
+            <div class="animated-progress"></div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🤝</div>
+            <h3>Community Focus</h3>
+            <p>Active engagement through social media, YouTube content, and regular community events.</p>
+            <div class="animated-progress"></div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">💡</div>
+            <h3>Innovation Hub</h3>
+            <p>Continuous development of new features and integration opportunities within the UTRC20 ecosystem.</p>
+            <div class="animated-progress"></div>
+        </div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zIkvogOalKo?si=iOR74iAJMOjvgqb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </section>
+
+    <section class="tabs-container">
+        <nav class="tabs">
+            <div class="tab active" data-tab="tab-wlm" onclick="TabController.showTab('tab-wlm')">WLM Token</div>
+            <div class="tab" data-tab="tab-utrc20" onclick="TabController.showTab('tab-utrc20')">UTRC20</div>
+            <div class="tab" data-tab="tab-waitlist" onclick="TabController.showTab('tab-waitlist')">Wait List Miners</div>
+        </nav>
+
+        <section id="tab-wlm" class="tab-content active">
+            <h2>WLM Token: Overview & Strengths</h2>
+            <p>WLM (Wait List Miners Token) is designed to drive long-term stability and growth in the blockchain ecosystem. Built on the Tron blockchain with the UTRC20 token standard, WLM aims to create a decentralized, sustainable, and collaborative environment for token holders.</p>
+            <ul>
+                <li><strong>Patience-Driven Philosophy:</strong> Long-term growth with steady returns.</li>
+                <li><strong>Strategic Partnerships:</strong> Merges smaller tokens into larger liquidity pools.</li>
+                <li><strong>Innovative Marketing:</strong> YouTube songs to promote partner projects.</li>
+                <li><strong>Scalability:</strong> Tron blockchain ensures low-cost, fast transactions.</li>
+            </ul>
+
+            <button class="button" onclick="window.open('https://sunpump.meme/token/TECnLhegQV7DvsN3chXo42yWR9nbiepSTR', '_blank')">Get WLM Token</button>
+            <button class="button" onclick="window.open('https://www.youtube.com/@WaitListMiners', '_blank')">Youtube</button>
+            <button class="button" onclick="window.open('https://x.com/waitlistminers', '_blank')">X-twitter</button>
+        </section>
+
+        <section id="tab-utrc20" class="tab-content">
+            <h2>About UTRC20</h2>
+            <p>UTRC20 simplifies liquidity pooling for token creators. It allows seamless swaps and high APY staking opportunities. Join a unified ecosystem where smaller tokens thrive together.</p>
+            <button class="button" onclick="window.open('https://utrc20.pages.dev', '_blank')">Visit UTRC20 Site</button>
+        </section>
+
+        <section id="tab-waitlist" class="tab-content">
+            <h2>Wait List Miners Platform Overview</h2>
+            <p>Wait List Miners offers a unique mining platform where users can participate in mining through a 2-year locked contract with a guaranteed 4% APY. Miners earn UTRC20 tokens as rewards and help strengthen the ecosystem by providing additional collateral to liquidity pools.</p>
+            <ul>
+                <li>Minimum entry: 1 TRX</li>
+                <li>Guaranteed 4% APY</li>
+                <li>Lending and borrowing features to enhance participation</li>
+            </ul>
+            <button class="button" onclick="window.open('https://wait-list-mine.pages.dev', '_blank')">Visit Wait List Miners Site</button>
+        </section>
+    </section>
+
+    <section class="benefits-grid">
+        <h2>Key Benefits</h2>
+        <div class="benefit-card">
+            <h3>🌟 Daily Price Increase</h3>
+            <p>Experience steady growth with our unique tokenomics model.</p>
+        </div>
+        <div class="benefit-card">
+            <h3>💪 Strong Community</h3>
+            <p>Join a vibrant community of holders and developers.</p>
+        </div>
+        <div class="benefit-card">
+            <h3>🔄 Sustainable Model</h3>
+            <p>Built on proven mechanics for lasting value.</p>
+        </div>
+    </section>
+
+    <div class="roadmap-section">
+        <h2 class="highlight-text">WLM Token Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Phase 1: Launch</h3>
+                <ul>
+                    <li>Initial token distribution</li>
+                    <li>Community building</li>
+                    <li>Social media presence establishment</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>Phase 2: Growth</h3>
+                <ul>
+                    <li>Partnership expansion</li>
+                    <li>Enhanced liquidity pools</li>
+                    <li>Marketing campaigns</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>Phase 3: Evolution</h3>
+                <ul>
+                    <li>New feature implementation</li>
+                    <li>Cross-chain integration</li>
+                    <li>Ecosystem expansion</li>
+                </ul>
+            </div>
         </div>
     </div>
-  
+
+    <div class="success-stories">
+        <div class="story-card">
+            <h3>Explosive Growth</h3>
+            <p>Early investors have seen remarkable returns within the first month of launch, showcasing the strong market demand for WLM.</p>
+        </div>
+        
+        <div class="story-card">
+            <h3>Community Power</h3>
+            <p>Our growing community of holders demonstrates the trust and belief in WLM's long-term vision and potential.</p>
+        </div>
+        
+        <div class="story-card">
+            <h3>Innovation First</h3>
+            <p>WLM's unique tokenomics and strategic partnerships position it for sustainable growth in the evolving crypto landscape.</p>
+        </div>
 
 
- </header>
 
-    <nav class="tabs">
-        <div class="tab active" data-tab="tab-wlm" onclick="showTab('tab-wlm')">WLM Token</div>
-        <div class="tab" data-tab="tab-utrc20" onclick="showTab('tab-utrc20')">UTRC20</div>
-        <div class="tab" data-tab="tab-waitlist" onclick="showTab('tab-waitlist')">Wait List Miners</div>
-    </nav>
 
-    <section id="tab-wlm" class="tab-content active">
-        <h2>WLM Token: Overview & Strengths</h2>
-        <p>WLM (Wait List Miners Token) is designed to drive long-term stability and growth in the blockchain ecosystem. Built on the Tron blockchain with the UTRC20 token standard, WLM aims to create a decentralized, sustainable, and collaborative environment for token holders.</p>
-        <ul>
-            <li><strong>Patience-Driven Philosophy:</strong> Long-term growth with steady returns.</li>
-            <li><strong>Strategic Partnerships:</strong> Merges smaller tokens into larger liquidity pools.</li>
-            <li><strong>Innovative Marketing:</strong> YouTube songs to promote partner projects.</li>
-            <li><strong>Scalability:</strong> Tron blockchain ensures low-cost, fast transactions.</li>
-        </ul>
 
-        <button class="button" onclick="window.open('https://sunpump.meme/token/TECnLhegQV7DvsN3chXo42yWR9nbiepSTR', '_blank')">Get WLM Token</button>
-
-        <button class="button" onclick="window.open('https://www.youtube.com/@WaitListMiners', '_blank')">Youtube</button>
-
-         <button class="button" onclick="window.open('https://x.com/waitlistminers', '_blank')">X-twitter</button>
-
-    </section>
-
-    <section id="tab-utrc20" class="tab-content">
-        <h2>About UTRC20</h2>
-        <p>UTRC20 simplifies liquidity pooling for token creators. It allows seamless swaps and high APY staking opportunities. Join a unified ecosystem where smaller tokens thrive together.</p>
-        <button class="button" onclick="window.open('https://utrc20.pages.dev', '_blank')">Visit UTRC20 Site</button>
-    </section>
-
-    <section id="tab-waitlist" class="tab-content">
-        <h2>Wait List Miners Platform Overview</h2>
-        <p>Wait List Miners offers a unique mining platform where users can participate in mining through a 2-year locked contract with a guaranteed 4% APY. Miners earn UTRC20 tokens as rewards and help strengthen the ecosystem by providing additional collateral to liquidity pools.</p>
-        <ul>
-            <li>Minimum entry: 1 TRX</li>
-            <li>Guaranteed 4% APY</li>
-            <li>Lending and borrowing features to enhance participation</li>
-        </ul>
-        <button class="button" onclick="window.open('https://wait-list-mine.pages.dev', '_blank')">Visit Wait List Miners Site</button>
-    </section>
+    </div>
 
     <div class="links">
         <p>Connect with us:</p>
@@ -335,14 +658,291 @@
         <a href="https://x.com/waitlistminers" target="_blank">X (formerly Twitter)</a>
     </div>
 
+    <section class="social-links">
+        <h2>Connect With Us</h2>
+        <div class="social-grid">
+            <a href="https://www.youtube.com/@WaitListMiners" target="_blank" class="social-link">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+            <a href="https://x.com/waitlistminers" target="_blank" class="social-link">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+            <a href="https://publish0x.com/start/investing-is-waiting-securely-xxvxkky?a=oQeZYYYRdp" target="_blank" class="social-link">
+                <i class="fas fa-blog"></i>
+                <span>Publish0x</span>
+            </a>
+        </div>
+    </section>
+
     <footer>
-
-</div align="center">
-<iframe align="center" width="560" height="315" src="https://www.youtube.com/embed/k_-JkcAGW9M?si=NGeML8CZLSJKUzkj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div><br>
-
+        <div align="center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/k_-JkcAGW9M?si=NGeML8CZLSJKUzkj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
         <p>&copy; 2024 WLM Token. All rights reserved.</p>
-
     </footer>
-</body>
-</html>
+
+    <section class="metrics-showcase">
+<div align="center">
+                    <button class="button glow-effect" onclick="window.open('https://sunpump.meme/token/TECnLhegQV7DvsN3chXo42yWR9nbiepSTR', '_blank')">
+                        <span class="button-text">Buy WLM Token</span>
+                        <span class="button-icon">🚀</span>
+                    </button>
+</div>
+    </section>
+
+<script type="module" src="js/animation.js"></script>
+<script type="module" src="js/pricing.js"></script>
+<script type="module" src="js/countdown.js"></script>
+<script type="module" src="js/tabs.js"></script>
+<script type="module" src="js/metrics.js"></script>
+<script type="module" src="js/main.js"></script>
+
+<script>
+const Config = {
+  initialPrice: 0.000032,
+  dailyIncrease: 0.000001,
+  startDate: new Date(2024, 10, 20, 15, 30, 0),
+  links: {
+    buy: 'https://sunpump.meme/token/TECnLhegQV7DvsN3chXo42yWR9nbiepSTR',
+    youtube: 'https://www.youtube.com/@WaitListMiners',
+    twitter: 'https://x.com/waitlistminers'
+  }
+};
+
+const AnimationController = {
+  initializeAnimations() {
+    const featureItems = document.querySelectorAll('.feature-item');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    featureItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'all 0.6s ease-out';
+        observer.observe(item);
+    });
+
+    const cards = document.querySelectorAll('.benefit-card');
+    const observerCards = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease-out';
+        observerCards.observe(card);
+    });
+
+    const storyCards = document.querySelectorAll('.story-card');
+    const observerStories = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    storyCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease-out';
+        observerStories.observe(card);
+    });
+  },
+  
+  createFloatingCoins() {
+    const container = document.getElementById('floatingCoins');
+    const symbols = ['💰', '🚀', '💎'];
+    
+    for(let i = 0; i < 25; i++) {
+        const coin = document.createElement('div');
+        coin.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        coin.style.position = 'absolute';
+        coin.style.fontSize = Math.random() * 20 + 15 + 'px';
+        coin.style.left = Math.random() * 100 + '%';
+        coin.style.top = Math.random() * 100 + '%';
+        coin.style.animation = `float ${Math.random() * 3 + 2}s infinite ease-in-out ${Math.random() * 2}s`;
+        coin.style.opacity = '0.5';
+        coin.style.transform = `rotate(${Math.random() * 360}deg)`;
+        container.appendChild(coin);
+    }
+  }
+};
+
+const PricingController = {
+  calculatePrices(daysPassed) {
+    const currentPrice = Config.initialPrice + daysPassed * Config.dailyIncrease;
+    const nextPrice = currentPrice + Config.dailyIncrease;
+    return { currentPrice, nextPrice };
+  },
+  
+  updatePrices() {
+    const now = new Date();
+    const daysPassed = Math.floor((now - Config.startDate) / (1000 * 60 * 60 * 24));
+
+    const { currentPrice, nextPrice } = this.calculatePrices(daysPassed);
+    document.getElementById("current-price").textContent = `$${currentPrice.toFixed(6)}`;
+    document.getElementById("next-price").textContent = `$${nextPrice.toFixed(6)}`;
+  }
+};
+
+const CountdownController = {
+  startDailyCountdown(display) {
+    const interval = setInterval(() => {
+        const now = new Date();
+        const next15_30 = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            15,
+            30,
+            0
+        );
+        if (now > next15_30) {
+            next15_30.setDate(next15_30.getDate() + 1);
+        }
+
+        const timeLeft = next15_30 - now;
+        if (timeLeft < 0) {
+            clearInterval(interval);
+            display.textContent = "Updating...";
+            PricingController.updatePrices();
+        } else {
+            const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+            const seconds = Math.floor((timeLeft / 1000) % 60);
+
+            display.textContent = 
+                `${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
+        }
+    }, 1000);
+  }
+};
+
+const TabController = {
+  showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+        content.style.display = 'none';
+    });
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    
+    const targetTab = document.getElementById(tabId);
+    const targetTabButton = document.querySelector(`[data-tab="${tabId}"]`);
+    
+    targetTab.style.display = 'block';
+    setTimeout(() => {
+        targetTab.classList.add('active');
+    }, 10);
+    targetTabButton.classList.add('active');
+  }
+};
+
+const MetricsController = {
+  initializeMetrics() {
+    const metrics = document.querySelectorAll('.metric-value');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                
+                // Add counting animation
+                if (entry.target.id === 'holders-count') {
+                    this.animateValue(entry.target, 0, 1200, 2000);
+                }
+            }
+        });
+    }, { threshold: 0.1 });
+
+    metrics.forEach(metric => {
+        metric.style.opacity = '0';
+        metric.style.transform = 'translateY(20px)';
+        metric.style.transition = 'all 0.6s ease-out';
+        observer.observe(metric);
+    });
+  },
+  
+  animateValue(elementId, start, end, duration) {
+    const element = document.getElementById(elementId);
+    const step = (timestamp) => {
+        if (!element.startTime) element.startTime = timestamp;
+        const progress = Math.min((timestamp - element.startTime) / duration, 1);
+        
+        const current = Math.floor(progress * (end - start) + start);
+        element.textContent = elementId === 'daily-growth' ? 
+            `+${current.toFixed(1)}%` : `${current}+`;
+        
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        }
+    };
+    requestAnimationFrame(step);
+  }
+};
+
+const UI = {
+  initializeAnimations() {
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add intersection observer for fade-in animations
+    const fadeElements = document.querySelectorAll('.point, .feature-item, .timeline-item');
+    const fadeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    fadeElements.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'all 0.6s ease-out';
+      fadeObserver.observe(el);
+    });
+  }
+};
+
+// Update initialization
+document.addEventListener("DOMContentLoaded", () => {
+    AnimationController.initializeAnimations();
+    UI.initializeAnimations();
+    CountdownController.startDailyCountdown(
+      document.getElementById("countdown")
+    );
+    PricingController.updatePrices();
+    TabController.showTab('tab-wlm');
+    MetricsController.initializeMetrics();
+    AnimationController.createFloatingCoins();
+});
+</script>
+
+</body></html>
