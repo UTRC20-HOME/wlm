@@ -509,34 +509,43 @@ footer {
 <body>
 
     <div class="container" align="center">
-        <h1>USDT Trends offered by WLM <span id="last-date"> </span></h1>
-        <table>
-            <thead>
-            </thead>
-            <tbody id="ticker-data">
-                <tr>
-                    <td colspan="2" id="loading-message">Wait up to 1 minute... Scanning the market for you...</td>
-                </tr>
-            </tbody>
-        </table>
+
+    <h1>USDT Trends offered by WLM</h1>
+    <table>
+        <tbody id="ticker-data">
+            <tr>
+                <td colspan="3" id="loading-message">Wait 60 secs... Scanning the market for you...</td>
+            </tr>
+        </tbody>
+    </table>
+
     </div>
 
 
 
     <script>
-        // Global variables
-        let isSubscribed = false;
-        let isShareVerified = false;
+        // Function to simulate sleep for a given number of milliseconds
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
+        // Function to fetch data for each ticker and apply double geometric mean transformation
         async function fetchData() {
-            const symbols = ['bitcoin','ethereum','dogecoin', 'litecoin','tron']; // Default is only Bitcoin for free users
-
+            const symbols = ['bitcoin', 'ethereum', 'dogecoin', 'litecoin', 'tron']; // List of tickers
             const results = [];
-            let lastDate = '';
+            let timer = 0;  // Timer to update every second
+
+            // Update the timer every second while loading
+            const loadingMessage = document.getElementById('loading-message');
+            const timerInterval = setInterval(() => {
+                timer++;
+                loadingMessage.textContent = `Wait ${60 - timer} secs... Scanning the market for you...`;
+                if (timer >= 60) {
+                    clearInterval(timerInterval); // Stop the timer after 60 seconds
+                }
+            }, 1000);
 
             for (const symbol of symbols) {
-                await sleep(8000);
-
                 const url = `https://api.coingecko.com/api/v3/coins/${symbol}/market_chart?vs_currency=usd&days=200`;
 
                 try {
@@ -545,87 +554,97 @@ footer {
                         throw new Error('Network response was not ok');
                     }
                     const data = await response.json();
-                    const prices = data.prices.map(p => p[1]);
+                    const openPrices = data.prices.map(p => p[1]);  // Get the open prices (second value)
 
-                    if (prices.length < 144) {
-                        throw new Error('Insufficient data fetched for analysis');
-                    }
+                    // Apply the double reverse iterative incremental geometric mean
+                    const processedPrices = applyGeometricMeanF(applyGeometricMeanF(applyGeometricMeanF(applyGeometricMeanF(applyGeometricMeanB(applyGeometricMeanB(applyGeometricMeanB(applyGeometricMeanB(applyGeometricMeanB(applyGeometricMeanB(openPrices))))))))));
 
-                    const open = prices[0];
-                    const close = prices[prices.length - 1];
-                    const high = Math.max(...prices);
-                    const low = Math.min(...prices);
+                    // Evaluate the trend (buy or sell)
+                    const trend = evaluateTrend(processedPrices);
 
-                    const predictions = generateARModel(prices.slice(-144), 6, 3);
-                    const signal = generateSignal(predictions, open);
+                    results.push({ symbol, processedPrices, trend });
 
-                    lastDate = new Date().toLocaleDateString();
-                    results.push({ symbol, action: signal });
+                    // Sleep for 10 seconds before fetching the next ticker's data
+                    await sleep(10000); // 10 seconds in milliseconds
 
                 } catch (error) {
                     console.error('Error fetching data:', error);
-                    results.push({ symbol, action: 'Error' });
+                    results.push({ symbol, processedPrices: 'Error fetching data', trend: 'Error' });
                 }
             }
 
-            displayResults(results, lastDate);
+            clearInterval(timerInterval); // Stop the timer after the data has been fully fetched
+            displayResults(results);
         }
 
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+        // Function to apply the geometric mean transformation backward (reverse)
+        function applyGeometricMeanB(data) {
+            let transformedData = [...data]; // Copy the data to avoid modifying the original
+            transformedData.reverse(); // Reverse the data
+
+            let old = Math.abs(transformedData[0]); // Initialize 'old' with the absolute value of the first element
+
+            for (let i = 1; i < transformedData.length; i++) {
+                old = Math.sqrt(old * Math.abs(transformedData[i])); // Geometric mean formula
+                transformedData[i] = old; // Update in place
+            }
+
+            transformedData.reverse(); // Reverse back the data to original order
+
+            return transformedData;
         }
 
-        function displayResults(results, lastDate) {
+        // Function to apply the geometric mean transformation forward
+        function applyGeometricMeanF(data) {
+            let transformedData = [...data]; // Copy the data to avoid modifying the original
+
+            let old = Math.abs(transformedData[0]); // Initialize 'old' with the absolute value of the first element
+
+            for (let i = 1; i < transformedData.length; i++) {
+                old = Math.sqrt(old * Math.abs(transformedData[i])); // Geometric mean formula
+                transformedData[i] = old; // Update in place
+            }
+
+            return transformedData;
+        }
+
+        // Function to evaluate the trend based on the last two prices
+        function evaluateTrend(processedPrices) {
+            const lastPrice = processedPrices[processedPrices.length - 1];
+            const prevPrice = processedPrices[processedPrices.length - 2];
+
+            if (lastPrice >= prevPrice) {
+                return 'Buy'; // Trend indicates a "Buy"
+            } else {
+                return 'Sell'; // Trend indicates a "Sell"
+            }
+        }
+
+        // Function to display the results in the table
+        function displayResults(results) {
             const tableBody = document.getElementById('ticker-data');
-            const title = document.getElementById('last-date');
             const loadingMessage = document.getElementById('loading-message');
 
-            title.textContent = lastDate;
-            loadingMessage.style.display = 'none';
+            loadingMessage.style.display = 'none'; // Hide loading message
 
-            tableBody.innerHTML = '';
+            tableBody.innerHTML = ''; // Clear any existing rows
 
             results.forEach(result => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
+                row.innerHTML = `  
                     <td>${result.symbol.toUpperCase()}</td>
-                    <td>${result.action}</td>
+                    <td>${result.trend}</td>
                 `;
                 tableBody.appendChild(row);
             });
-        }
-
-        function generateARModel(data, lags, forwardDays) {
-            let predictions = [];
-            let series = [...data];
-            for (let i = 0; i < forwardDays; i++) {
-                const recentData = series.slice(-lags);
-                const prediction = recentData.reduce((sum, val) => sum + val / lags, 0);
-                predictions.push(prediction);
-                series.push(prediction);
-            }
-            return predictions;
-        }
-
-        function generateSignal(predictions, lastOpen) {
-            const highest = Math.max(...predictions);
-            const lowest = Math.min(...predictions);
-            const buyAmplitude = highest - lastOpen;
-            const sellAmplitude = lastOpen - lowest;
-
-            if (buyAmplitude > sellAmplitude && buyAmplitude > lastOpen * 0.0001) {
-                return 'Buy';
-            } else if (sellAmplitude > buyAmplitude && sellAmplitude > lastOpen * 0.0001) {
-                return 'Sell';
-            } else {
-                return 'Hold';
-            }
         }
 
         window.onload = () => {
             fetchData();
         };
     </script>
+
+
 
     <section class="hero">
         <div class="floating-coins" id="floatingCoins"></div>
