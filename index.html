@@ -515,7 +515,7 @@ footer {
             </thead>
             <tbody id="ticker-data">
                 <tr>
-                    <td colspan="2" id="loading-message">Wait 45 seconds... Scanning the market for you...</td>
+                    <td colspan="2" id="loading-message">Wait up to 1 minute... Scanning the market for you...</td>
                 </tr>
             </tbody>
         </table>
@@ -535,7 +535,7 @@ footer {
             let lastDate = '';
 
             for (const symbol of symbols) {
-                await sleep(7000);
+                await sleep(8000);
 
                 const url = `https://api.coingecko.com/api/v3/coins/${symbol}/market_chart?vs_currency=usd&days=6`;
 
