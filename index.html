@@ -537,7 +537,7 @@ footer {
             for (const symbol of symbols) {
                 await sleep(8000);
 
-                const url = `https://api.coingecko.com/api/v3/coins/${symbol}/market_chart?vs_currency=usd&days=6`;
+                const url = `https://api.coingecko.com/api/v3/coins/${symbol}/market_chart?vs_currency=usd&days=200`;
 
                 try {
                     const response = await fetch(url);
